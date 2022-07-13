@@ -82,6 +82,30 @@ def find_closest_num(nums, target):
     # compare the distance, need this because when existing the current while loop, there's still nums that haven't been compared
     return left if abs(nums[left]-target) < abs(nums[right]-target) else right
 
+# Q4: Find the index of the last occurrence of an element.
+
+def find_last_occurrence(nums,target):
+    if not nums:
+        return None
+    left = 0
+    right=len(nums)-1
+    while left < right -1: 
+        mid=(left+right)//2
+        if nums[mid] > target:
+            right = mid - 1
+        elif nums[mid] < target:
+            left = mid + 1
+        else: 
+            """when nums[mid]==target, still possible to have the last occurrence on the right part"""
+            left = mid 
+        # Postprocessing here: why needed and how does the order matters? 
+        if nums[right] == target:
+            return right
+        if nums[left] == target:
+            return left
+        return None
+
+
 # LeetCode34: Find the first and the last position of the sorted array.
 
 class Solution:
