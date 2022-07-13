@@ -1,4 +1,4 @@
-## Binary Search 
+## Q1: Binary Search 
 
 """ 
 Ideas: For finding the position of the desired number, where the list should be sorted first. 
@@ -25,9 +25,9 @@ def binary_search(nums, target):
             return mid 
     return None 
 
+binary_search([1,3,8,9,12,25],12)
 
-
-# Apply binary search in 2D space. 
+# LeetCode74: Apply binary search in 2D space. 
 """
 Matrix(n,m): first element of next row is larger than the last element of previous row. 
     [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]]
@@ -43,12 +43,12 @@ col_index= index % M
 def binary_search_2d(matrix, target):
     if not matrix:
         return None
-    N,M=len(matrix),len(matrix[0]-1)
+    N,M=len(matrix),len(matrix[0])
     l,u=0,N*M-1
     while l <= u:
         mid=(l+u)//2
-        row_num= mid // 2
-        col_num=mid % 2 
+        row_num= mid // M
+        col_num=mid % M
         if matrix[row_num][col_num] > target:
             u=mid-1
         elif matrix[row_num][col_num] < target:
@@ -57,7 +57,7 @@ def binary_search_2d(matrix, target):
             return(row_num, col_num)
     return None
 
-# Find an element in the array that is clsest to the target number.
+# Q3: Find an element in the array that is clsest to the target number.
 """
 The original binary search (while l <= u ) method will fall into dead loop.
 
@@ -82,4 +82,38 @@ def find_closest_num(nums, target):
     # compare the distance, need this because when existing the current while loop, there's still nums that haven't been compared
     return left if abs(nums[left]-target) < abs(nums[right]-target) else right
 
-    # Find the index of the first occurrence of an element.
+# LeetCode34: Find the first and the last position of the sorted array.
+
+class Solution:
+    
+    def searchRange(self, nums: list[int], target: int) -> List[int]:
+        lower_bound=self.findBound(nums,target,True)
+        if(lower_bound == -1):
+            return [-1,-1]
+        upper_bound=self.findBound(nums,target,False)
+        return [lower_bound,upper_bound]
+        
+    def findBound(self, nums:list[int], target:int, isFirst:bool) -> int:
+        begin, end =0, len(nums)-1
+        while begin <= end: 
+            mid=(begin+end)//2
+            if nums[mid] > target: 
+                end=mid - 1
+            elif nums[mid] < target: 
+                begin=mid + 1
+            # now for the case when nums[mid]==target, two scenarios
+            else: 
+                if isFirst:
+                    # now try to find the lower bound
+                    if mid == begin or nums[mid - 1] < target: 
+                        return mid 
+                    # not ideal, continue search on the left side for lower bound 
+                    end = mid - 1 
+                else:
+                    # find the upper bound
+                    if mid == end or nums[mid + 1] > target:
+                        return mid
+                    begin = mid + 1
+        return -1
+                         
+        
