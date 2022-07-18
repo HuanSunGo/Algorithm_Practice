@@ -7,90 +7,16 @@ Why need a linked list?
 1. Versatility and flexibility, does not require to know the size ahead. 
 2. Being able to model the link based relationship directly.Fundamental to tree. 
 """
-
-# Node class
-class node:
-	def __init__(self,data):
-		self.data=data # sometimes also refers to as `value` 
-		self.next=None
-
-# Linked List class contains a Node object
-class linked_list:
-
-	# Function to initialize head
-	def __init__(self):
-		self.head=node()
-
-	# Adds new node containing 'data' to the end of the linked list.
-	def append(self,data):
-		new_node=node(data)
-		cur=self.head
-		while cur.next!=None:
-			cur=cur.next
-		cur.next=new_node
-
-	# Returns the length (integer) of the linked list.
-	def length(self):
-		cur=self.head
-		total=0
-		while cur.next!=None:
-			total+=1
-			cur=cur.next
-		return total 
-
-	# Prints out the linked list in traditional Python list format. 
-	def display(self):
-		elems=[]
-		cur_node=self.head
-		while cur_node.next!=None:
-			cur_node=cur_node.next
-			elems.append(cur_node.data)
-		print (elems)
-
-	# Returns the value of the node at 'index'. 
-	def get(self,index):
-		if index>=self.length() or index<0: # added 'index<0' post-video
-			print ("ERROR: 'Get' Index out of range!")
-			return None
-		cur_idx=0
-		cur_node=self.head
-		while True:
-			cur_node=cur_node.next
-			if cur_idx==index: return cur_node.data
-			cur_idx+=1
-
-	# Deletes the node at index 'index'.
-	def erase(self,index):
-		if index>=self.length() or index<0: # added 'index<0' post-video
-			print ("ERROR: 'Erase' Index out of range!")
-			return 
-		cur_idx=0
-		cur_node=self.head
-		while True:
-			last_node=cur_node
-			cur_node=cur_node.next
-			if cur_idx==index:
-				last_node.next=cur_node.next
-				return
-			cur_idx+=1
-            
-
-my_list=linked_list()
-my_list.append(1)
-my_list.append(2)
-my_list.append(3)
-my_list.append(4)
-
-my_list.display()
-
-
 ## Q1: Traverse
 
 # Node class
+from os import preadv
+
+
 class ListNode(object):
     def __init__(self, val):
         self.val = val
-        self.next = None
+        self.next = None	
 """
 	def __str__(self):
 		
@@ -153,6 +79,28 @@ def search_by_index(head, index):
 			head = head.next # move the pointer 
 	return None 
 
+def search_by_value(head, value):
+	if head is None:
+		return None
+	curr_idx = 0
+	while head is not None:
+		if curr_idx.val == value:
+			return head
+		else:
+			curr_idx += 1 
+			head = head.next 
+	return None
+
+def search_by_value_example(head, value):
+	if not head:
+		return None
+	current_node = head 
+	while current_node is not None:
+		if current_node.val == value:
+			return current_node 
+		current_node = current_node.next
+	return None 
+
 # compare 
 n1, n2= ListNode(1), ListNode(1)
 print(n1==n2) # will return False because are different object 
@@ -161,17 +109,18 @@ search_by_index(h,3)
 
 ## Q3: Add to the index. 
 """
-Given a singly linked list, an index and target value, 
+Given a singly linked list, an index(assuming the first list node is 0) and target value, 
 add a new node before the node at the specified position.
+Return the head of the singly linked list after insertion. 
 
-n1 -> n2, insert n 
+n1 -> n2 -> none, index = 1, value = 4 
 	  index
-n1 -> n -> n2 
+n1 -> 4 -> n2 -> none
 index-1 
 
 """
 def add_to_index(head, index, value):
-    # head: type is node 
+    # the case when inserting to the first position (head)
     if index == 0:
         new_head = ListNode(value)
         new_head.next = head
@@ -179,35 +128,25 @@ def add_to_index(head, index, value):
     else: 
         # preNode points to the node that precedes the node at the insertion position
         preNode = search_by_index(head, index-1)
+
+		# the case when inserting to the last position (tail)
         if preNode is None:
             return head 
+
         new_node = ListNode(value)
 		# insert n2 after n first
         new_node.next = preNode.next
         preNode.next = new_node 
         return head 
 
-def add_to_index1(head, index, value):
-	if index == 0: 
-		new_head = ListNode(value)
-		new_head.next = head 
-		return new_head 
-	else:
-		preNode = search_by_index(head, index-1)
-		if preNode is None: # already exceed the length 
-			return head 
-		new_node = ListNode(value)
-		new_node.head=preNode.mext
-		preNode.next = new_node 
-		return head 
-
 def add_to_index_fake(head, index, value):
 	"""
-	1-> None, index=0, value=4
-	dummy, fake, sentinel: mannuly add a pointer 
-
-	fake -> 1 -> None 
-	fake -> 4 -> 1 -> None 
+	Adding sentinel to remove additional logic branches. 
+	Since the head of a singly linked list is a special node that has no predecessor, to avoid the special case handling,
+	can manually add a dummy node before and use it as the new head. 
+	
+	1 -> None, index = 0, value = 4
+	fake -> 4 -> 1 ->None
 	4 -> 1 -> None 
 	"""
 	fake = ListNode(None) # the val isn't important 
@@ -216,8 +155,64 @@ def add_to_index_fake(head, index, value):
 	if prev is None: 
 		return head # fake.next 
 	new_node = ListNode(value)
-	new_node.head=prev.mext
+	new_node.next=prev.next
 	prev.next = new_node 
 	return fake.next 
 
-		
+## Q4: Remove from the index. 
+"""
+Other than the info about the current node and the predecessor,
+the sucessor info is also needed, which is None. 
+"""
+def remove_from_index(head, index):
+	fake = ListNode(None)
+	fake.next = head 
+	prev= search_by_index(fake, index)
+	# the case when we're at the last
+	if prev is None or prev.next is None:
+		return fake.next 
+	rm_node = prev.next
+	prev.next = rm_node.next 
+	rm_node.next = None
+	return fake.next
+
+
+## Q5: Design a linked list class. 
+def my_linkedlist(object):
+	def __init__(self):
+		"""
+		Initialize the data structure here, construct an empty linked list.
+		"""
+	def get(self, indes):
+		"""
+		Get the value of the index-th node in the linked list.
+		If the index is invalid, return -1.
+		"""
+	def add_at_head(self, val):
+		"""
+		After the insertion, the new node will be the head.
+		"""
+	def add_at_tail(self, val):
+		"""
+		Append a node of value to the last element of the linked list.
+		"""
+	def add_at_index(self, index, val):
+		""""""
+	def delete_at_index(self,index):
+		""""""
+
+## Q6: Double Linked List
+class ListNode(object):
+	def __init__(self, value):
+		"""
+		n1 <-> n2, insert n between n1 and n2: 
+		n.next=n2
+		n.prev=n1
+		n1.next=n
+		n2.prev=n
+		"""
+		self.value = value 
+		self.next = None
+		self.prev = None 
+	
+	

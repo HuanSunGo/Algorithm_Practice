@@ -43,7 +43,7 @@ def fib_recursion(n):
     return fib_recursion(n-1) + fib_recursion(n-2)
 
 for n in range(1,30):
-    print(n, ":", fib_recursion(n))
+    print(f"{n}'th fibonacci number: {fib_recursion(n)}")
 
 
 ## Q3: Optimized Fibonacci --> Using Memory
@@ -74,4 +74,22 @@ def fib_memory(n):
     return value 
 
 for n in range(1,101):
-    print(n, ":", fib_memory(n))
+    print(f"{n}'th fibonacci number: {fib_memory(n)}")
+
+## Q4: Calculate the sum from 1 to n
+def get_sum(n):
+    acc = 0 
+    for i in range(1,n+1):
+        acc += i 
+    return acc 
+
+def compute_sum(n):
+    # base case
+    if n == 1:
+        return 1
+    # recursive rule
+    return compute_sum(n-1) + n 
+
+## Q5: Print a singly linked list recursively.
+
+## Q6: Reverse a singly linked list. 
