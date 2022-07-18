@@ -1,3 +1,5 @@
+# Reference: https://leetcode.com/discuss/general-discussion/786126/Python-Powerful-Ultimate-Binary-Search-Template.-Solved-many-problems
+
 ## Q1: Binary Search 
 
 """ 
@@ -15,7 +17,7 @@ def binary_search(nums, target):
         return None 
     l=0
     u=len(nums)-1
-    while l <= u:
+    while l <= u: # can result in the dead loop sometimes 
         mid = (l+u)//2 # get the integer division
         if nums[mid] > target:
             u=mid - 1
@@ -68,7 +70,7 @@ def find_closest_num(nums, target):
         return None 
     left=0
     right=len(nums)-1
-    while left < right-1: # avoid the case when mid=left=right, since we didn't change -1 or +1
+    while left < right-1: # more recommended way: avoid the case when mid=left=right, since we didn't change -1 or +1
         mid = (left+right)//2 
         if nums[mid] > target:
             right=mid 
@@ -89,7 +91,7 @@ def find_last_occurrence(nums,target):
         return None
     left = 0
     right=len(nums)-1
-    while left < right -1: 
+    while left < right -1: # more generalized condition, so that middle won't be the same as left or right pointer 
         mid=(left+right)//2
         if nums[mid] > target:
             right = mid - 1
@@ -98,9 +100,10 @@ def find_last_occurrence(nums,target):
         else: 
             """when nums[mid]==target, still possible to have the last occurrence on the right part"""
             left = mid 
-        # Postprocessing here: why needed and how does the order matters? 
+        # Postprocessing here: when the while condition won't satisfied, and the left pointer meet with the right pointer  
         if nums[right] == target:
             return right
+            # cannot change the sequency of this two if conditions, because 
         if nums[left] == target:
             return left
         return None
