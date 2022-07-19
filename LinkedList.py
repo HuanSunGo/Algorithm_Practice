@@ -71,7 +71,7 @@ def search_by_index(head, index):
 	# here we want to find the node itself, other than the previous that need to fix the head
 	if index < 0 or head is None: 
 		return None 
-	curr_idx = 0 
+	curr_idx = 0 # only serving as a pointer, have no val-next attribute 
 	while head is not None: # the quit case is traverse till the end 
 		if curr_idx == index : 
 			return head # what we want is the node, not the index itself 
@@ -85,10 +85,10 @@ def search_by_value(head, value):
 		return None
 	curr_idx = 0
 	while head is not None:
-		if curr_idx.val == value:
+		if head.val == value:
 			return head
 		else:
-			curr_idx += 1 
+			curr_idx += 1 # serve as a int pointer, have no val attribute, and kinda redundant
 			head = head.next 
 	return None
 
@@ -275,4 +275,25 @@ class ListNode:
 		self.prev = None 
 
 	
-	
+## LeetCode 21: Merge Two Sorted Lists 
+
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution:
+    def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # base case 
+        if l1 is None:
+            return l2
+        elif l2 is None:
+            return l1
+        
+        # recursive ruel
+        elif l1.val < l2.val:
+            l1.next = self.mergeTwoLists(l1.next, l2) 
+            return l1
+        else: # l1.val > l2.val 
+            l2.next = self.mergeTwoLists(l1, l2.next)
+            return l2

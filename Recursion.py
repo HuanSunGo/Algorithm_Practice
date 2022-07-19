@@ -100,7 +100,7 @@ def print_list(head):
     # base case
     if head is None:
         return
-    print(head.val)
+    print(head.val) # head is a node of the already settled linked list
     print_list(head.next)
     # should return 1 2 3 
 
@@ -114,15 +114,20 @@ def print_list_v2(head):
 ## Q6: Reverse a singly linked list. [Important]
 """
 Original: 
-node1 -> node2 -> node3 -> .... -> noden -> None
+node1 -> node2 -> node3 -> .... -> nodeN -> None
 head 
 
 Reversed: 
-None <- node1 <- node2 <- ... <-   noden 
+None <- node1 <- node2 <- ... <-   nodeN
                                     head 
 
 Base case: 1) empty; 2) size = 1 
 Recursive rule: 
+1 -> 2 -> 3 -> 4 -> 5 -> None 
+         curr
+1 -> 2 -> 3 -> <- 4 <- 5 
+         curr.next.next = curr # to reverse the pointer between val 3 and 4
+         curr.next = None # interrupt the original pointer from val 3 to 4
 
 Time Complexity: O(n)
 Space Complexity: O(n), add according to the list 
