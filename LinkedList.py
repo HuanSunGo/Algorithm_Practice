@@ -11,6 +11,7 @@ Why need a linked list?
 
 # Node class
 from os import preadv
+from typing import List
 
 
 class ListNode(object):
@@ -42,13 +43,13 @@ def create_list(arr):
 
 
 def buildList(seq):
-    # seq is a list of objects.
+    # seq is a list of objects. f is the fake head 
     f = ListNode(None)
     c = f
     for obj in seq:
         c.next = ListNode(obj)
         c = c.next
-    h, f.next = f.next, None # why doing this? 
+    h, f.next = f.next, None # interrupt the connection of fake head. or without this sentence, and directly return f.next
     return h
 
 
@@ -178,31 +179,89 @@ def remove_from_index(head, index):
 
 
 ## Q5: Design a linked list class. 
-def my_linkedlist(object):
+class ListNode(object):
+    def __init__(self, val):
+        self.val = val
+        self.next = None	
+
+class my_linkedlist: 
 	def __init__(self):
 		"""
 		Initialize the data structure here, construct an empty linked list.
 		"""
-	def get(self, indes):
+		self.head = None
+		self.tail = None
+		self.size = 0
+	
+	def get_node(self, index):
+		curr = self.head 
+		for i in range(index):
+			curr = curr.next 
+		return curr 
+
+	def get(self, index): 
 		"""
 		Get the value of the index-th node in the linked list.
 		If the index is invalid, return -1.
 		"""
+		if index < 0 or index >= self.size:
+			return -1
+		node = self.get_node(index) # write the helper function 
+		return node.val 
+		
+
 	def add_at_head(self, val):
 		"""
 		After the insertion, the new node will be the head.
 		"""
+		if self.size == 0: 
+			self.head = ListNode(val)
+			self.tail = self.head # cannot go with ListNode(val), for these are stored at different locations, are seperate two nodes
+		# no need to change the tail other than the corner case 
+		else : 
+			new_head = ListNode(val)
+			new_head.next = self.head
+			self.head = new_head 
+		self.size += 1 
+
+
 	def add_at_tail(self, val):
 		"""
-		Append a node of value to the last element of the linked list.
+		Append a node of value to the last element of the linked list. [Need revise]
 		"""
+		if self.size == 0: 
+			self.head = ListNode(val)
+			self.tail = self.head 
+		else : 
+			new_head = ListNode(val)
+			new_head.next = self.head
+			self.head = new_head 
+		self.size += 1 
+
 	def add_at_index(self, index, val):
-		""""""
-	def delete_at_index(self,index):
-		""""""
+		"""
+		If index equals to the length of list, the node will append at the end of the list, 
+		if greater than the length, then cannot be inserted. 
+		"""
+		if self.size < 0 or index > self.size: 
+			return None
+		if index == 0:
+			self.add_at_head(val)
+		elif index == self.size:
+			self.add_at_tail(val)
+		else: 
+			prev = self.get_node(index-1)
+			new_node=ListNode(val)
+			new_node.next = prev.next
+			prev.next = new_node
+			self.size += 1 
+
+my_list=my_linkedlist()
+my_list.add_at_head(1)
+my_list.add_at_tail(9)
 
 ## Q6: Double Linked List
-class ListNode(object):
+class ListNode:
 	def __init__(self, value):
 		"""
 		n1 <-> n2, insert n between n1 and n2: 
@@ -214,5 +273,6 @@ class ListNode(object):
 		self.value = value 
 		self.next = None
 		self.prev = None 
+
 	
 	

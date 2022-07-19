@@ -91,5 +91,49 @@ def compute_sum(n):
     return compute_sum(n-1) + n 
 
 ## Q5: Print a singly linked list recursively.
+"""
+Given a singly linked list. 1-> 2 -> 3 -> None
+Base case: empty
+Recursive rule: print curr node -> recursivly print a sublist whose head is curr.next
+"""
+def print_list(head):
+    # base case
+    if head is None:
+        return
+    print(head.val)
+    print_list(head.next)
+    # should return 1 2 3 
 
-## Q6: Reverse a singly linked list. 
+def print_list_v2(head):
+    if head is None:
+        return
+    print_list_v2(head.next)
+    print(head.val)
+    # should return 3 2 1 
+
+## Q6: Reverse a singly linked list. [Important]
+"""
+Original: 
+node1 -> node2 -> node3 -> .... -> noden -> None
+head 
+
+Reversed: 
+None <- node1 <- node2 <- ... <-   noden 
+                                    head 
+
+Base case: 1) empty; 2) size = 1 
+Recursive rule: 
+
+Time Complexity: O(n)
+Space Complexity: O(n), add according to the list 
+"""
+def reverse_list(head):
+    # base case 
+    if head is None or head.next is None:
+        return head
+    # recursive ruel
+    new_head = reverse_list(head.next)
+    head.next.next = head 
+    head.next = None # interrupt the head 
+    return new_head
+
