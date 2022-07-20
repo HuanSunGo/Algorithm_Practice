@@ -255,6 +255,22 @@ class my_linkedlist:
 			new_node.next = prev.next
 			prev.next = new_node
 			self.size += 1 
+			
+	def deleteAtIndex(self, index):
+        """
+        Delete the index-th node in the linked list, if the index is valid.
+        :type index: int
+        :rtype: None
+        """
+        fake = ListNode(val)
+        fake.next = self.head 
+        prev = get_node(fake, index)
+        if prev is None or prev.next is None:
+          return fake.next 
+        rm_node = prev.next
+        prev.next = rm_node.next 
+        rm_node.next = None 
+        return fake.next 
 
 my_list=my_linkedlist()
 my_list.add_at_head(1)
