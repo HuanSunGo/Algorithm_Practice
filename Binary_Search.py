@@ -103,13 +103,17 @@ def find_last_occurrence(nums,target):
         # Postprocessing here: when the while condition won't satisfied, and the left pointer meet with the right pointer  
         if nums[right] == target:
             return right
-            # cannot change the sequency of this two if conditions, because 
+            # cannot change the sequency of this two if conditions
         if nums[left] == target:
             return left
         return None
 
 
 # LeetCode34: Find the first and the last position of the sorted array.
+"""
+Input: nums = [5,7,7,8,8,8,10], target = 8
+Output: [3,5]
+"""
 
 class Solution:
     
@@ -142,5 +146,58 @@ class Solution:
                         return mid
                     begin = mid + 1
         return -1
-                         
+
+
+class Solution_2:
+
+    def search_range(self, nums, target):
+        """
+        Main function
+        : type nums: list[int]
+        : type target: int
+        : rtype: list[int]
+        """
+        result = [-1, -1]
+        result[0] = self.search_left(nums,target)
+        result[1] = self.search_right(nums,target)
+
+        return result 
+
+    # helper function 1: find the first occurance
+    def search_left(self, nums, target):
+        index = -1
+        begin, end = 0, len(nums)-1
+
+        while begin <= end : 
+            mid = (begin + end ) // 2 
+            if nums[mid] == target:
+                index = mid 
+                end = mid - 1 
+            elif nums[mid] > target: 
+                end = mid - 1 
+            else:
+                begin = mid + 1 
+
+        return index 
+    
+    # helper function 2: find the last occurance
+    def search_right(self, nums, target): 
+        index = -1 
+        begin, end= 0, len(nums)-1
+
+        while begin <= end:
+            mid = (begin+end)//2
+            if nums[mid] == target:
+                index = mid 
+                begin = mid + 1 
+            elif nums[mid] > target:
+                end = mid - 1 
+            else:
+                begin = mid + 1 
+        return index 
+
+nums= [5,7,7,8,8,8,10]
+target = 8
+ans=Solution_2()
+ans.search_range(nums,target)
         
