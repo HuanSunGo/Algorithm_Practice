@@ -289,7 +289,49 @@ class ListNode:
 		self.value = value 
 		self.next = None
 		self.prev = None 
+## Q7: Remove all vowels in a linked list.
+class ListNode:
+	def __init__(self, value):
+		self.val = value 
+		self.next = None 
 
+def remove_vowels(head):
+	"""
+	Time Complexity: O(n)
+	Space Complexity: O(5*2) --> O(C) --> O(1) ? 
+	"""
+	fake_head = ListNode(None)
+	fake_head.next = head 
+	prev = fake_head
+	curr = head 
+	vowel = ['a','e','i','o','u'] # O(5)
+	vowel = set(vowel) # O(1)
+	while curr is not None: 
+		if curr.val in vowel:
+			prev.next = curr.next 
+			curr.next = None 
+		else:
+			prev = prev.next 
+			curr = curr.next 
+	return fake_head.next 
+
+def print_list(node):
+	a = []
+	while node is not None:
+		a.append(node.val)
+		node = node.next 
+	print(a)
+
+# test code 
+node_b = ListNode('b')
+node_i = ListNode('i')
+node_e = ListNode('e')
+node_b.next = node_i 
+node_i.next = node_e 
+
+print_list (node_b)
+new_head = remove_vowels(node_b)
+print_list(new_head)
 	
 ## LeetCode 21: Merge Two Sorted Lists 
 
