@@ -194,6 +194,9 @@ class my_linkedlist:
 		self.size = 0
 	
 	def get_node(self, index):
+		"""
+		Helper function for pointing to the specific node. 
+		"""
 		curr = self.head 
 		for i in range(index):
 			curr = curr.next 
@@ -289,6 +292,7 @@ class ListNode:
 		self.value = value 
 		self.next = None
 		self.prev = None 
+
 ## Q7: Remove all vowels in a linked list.
 class ListNode:
 	def __init__(self, value):
@@ -305,14 +309,13 @@ def remove_vowels(head):
 	prev = fake_head
 	curr = head 
 	vowel = ['a','e','i','o','u'] # O(5)
-	vowel = set(vowel) # O(1)
-	while curr is not None: 
+	vowel = set(vowel) # O(1) set is faster 
+	while curr :  # while curr is not None 
 		if curr.val in vowel:
 			prev.next = curr.next 
-			curr.next = None 
 		else:
 			prev = prev.next 
-			curr = curr.next 
+	    curr = curr.next 
 	return fake_head.next 
 
 def print_list(node):
@@ -332,6 +335,58 @@ node_i.next = node_e
 print_list (node_b)
 new_head = remove_vowels(node_b)
 print_list(new_head)
+
+## Q8: Determine if a LinkedList is panlidrome. 
+def find_mid(head):
+	"""
+	Logic
+	----------------
+	Fast and slow pointer: 1) find mid, 2) reverse 2nd half, 3) compare 
+	"""
+	if head is None or head.next is None:
+		return head 
+
+	slow = head 
+	fast = head 
+	while fast and fast.next and fast.next.next: 
+		fast = fast.next.next 
+		slow = slow.next 
+	return slow 
+
+def reverse_list(head):
+	prev = None 
+	while head:
+		next_node = head.next 
+		head.next = prev
+		prev = head 
+		head = next_node 
+	return prev
+
+def is_palindrome(head):
+	if head is None: 
+		return True
+	mid_node_prev = find_mid(head)
+	# A  B  C   E  F  G
+	#       MP  M
+	second_half = mid_node_prev.next 
+	mid_node_prev.next = None # cut off C and E 
+	head1 = head 
+	head2 = reverse_list(second_half)
+	while head1 and head2:
+		if head1.val != head2.val:
+			return False
+		head1 = head1.next
+		head2 = head2.next 
+	return True 
+
+# test code 
+node1 = ListNode(1)
+node2= ListNode(2)
+node0 = ListNode(0)
+node1.next = node2
+node2.next = node0
+print(is_palindrome(node1))
+
 	
 ## LeetCode 21: Merge Two Sorted Lists 
 

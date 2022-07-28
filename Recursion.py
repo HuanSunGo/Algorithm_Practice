@@ -112,27 +112,27 @@ def print_list_v2(head):
     # should return 3 2 1 
 
 ## Q6: Reverse a singly linked list. [Important]
-"""
-Original: 
-node1 -> node2 -> node3 -> .... -> nodeN -> None
-head 
-
-Reversed: 
-None <- node1 <- node2 <- ... <-   nodeN
-                                    head 
-
-Base case: 1) empty; 2) size = 1 
-Recursive rule: 
-1 -> 2 -> 3 -> 4 -> 5 -> None 
-         curr
-1 -> 2 -> 3 -> <- 4 <- 5 
-         curr.next.next = curr # to reverse the pointer between val 3 and 4
-         curr.next = None # interrupt the original pointer from val 3 to 4
-
-Time Complexity: O(n)
-Space Complexity: O(n), add according to the list 
-"""
 def reverse_list(head):
+    """
+    Original: 
+    node1 -> node2 -> node3 -> .... -> nodeN -> None
+    head 
+
+    Reversed: 
+    None <- node1 <- node2 <- ... <-   nodeN
+                                        head 
+
+    Base case: 1) empty; 2) size = 1 
+    Recursive rule: 
+    1 -> 2 -> 3 -> 4 -> 5 -> None 
+            curr
+    1 -> 2 -> 3 -> <- 4 <- 5 
+            curr.next.next = curr # to reverse the pointer between val 3 and 4
+            curr.next = None # interrupt the original pointer from val 3 to 4
+
+    Time Complexity: O(n)
+    Space Complexity: O(n), add according to the list 
+    """
     # base case 
     if head is None or head.next is None:
         return head
@@ -141,4 +141,42 @@ def reverse_list(head):
     head.next.next = head 
     head.next = None # interrupt the head 
     return new_head
+
+def reverse_list_iteration(head):
+    """
+    Parameters:
+    -----------------
+    input: ListNode head 
+    return: ListNode 
+
+    Logic: 
+    ------------------
+    For the head node, same with the general node:
+
+          prev  head 
+    None    1 -> 2 -> 3 -> 4 -> None [Before]
+    None <- 1 <- 2    3 -> 4 -> None [After]
+
+    next_node = head.next # save the next first, to prevent the next node from losing after the first reverse
+    head.next = prev # reverse
+    prev = head # move forward 
+    head = next_node # move forward 
+
+    Ending Condition:
+    while head: # if only till head.next is None, the curr and prev still hadn't been linked yet 
+        pass 
+    return prev 
+
+    Time Complexity: O(n)
+    Space Complexity: O(1) , no newly added storage 
+    """
+    prev = None 
+    while head : 
+        next_node = head.next 
+        head.next = prev
+        prev = head 
+        head = next_node 
+    return prev 
+
+
 
