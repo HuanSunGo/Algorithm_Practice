@@ -9,7 +9,7 @@ Ideas: For finding the position of the desired number, where the list should be 
 num:  sorted list i.e. nums=[1,2,4,5,7,8,9]
 target: the number we're searching for i.e. target=4
 
-Time Complexity: O(log(ns))
+Time Complexity: O(log(n))
 """
 
 def binary_search(nums, target): 
@@ -201,3 +201,46 @@ target = 8
 ans=Solution_2()
 ans.search_range(nums,target)
         
+## Q5: Find the largest integer whose square is less than or equal to the given integer.
+def square_root(n):
+    """
+    Parameters:
+    ---------------------------
+    input: non-negative integer 
+    output: non-negative integer
+
+    Logic:
+    ----------------------------
+    Solution1: try every number in [1,n]
+        val = 1
+        while val * val <= n:
+            val += 1 
+        return val - 1 
+    # Time Complexity: O(n), Space Complexity: O(1)
+
+    Solution2 : sorted array -> binary search 
+        if mid * mid < n: go right 
+        if mid * mid > n: go left 
+        if mid * mid == n: return mid 
+    # Time Complexity: O(logn), Space Complexity: O(1)
+    """
+    if n <= 1: 
+        return n 
+    left, right = 1, n//2 # since n^2 grows much quicker than n//2
+    
+    while left < right - 1: # to avoid the overlaping
+        mid = (left + right) // 2 
+        midsq = mid * mid 
+        if midsq == n:
+            return mid 
+        elif midsq > n:
+            right = mid 
+        else: 
+            left = mid 
+    if right * right <= n:
+        return right 
+    else:
+        return left 
+
+# test code 
+print(square_root(300))
