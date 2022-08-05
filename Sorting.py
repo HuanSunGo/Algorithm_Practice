@@ -30,7 +30,7 @@ print(nums)
 ## Q2: Selection Sort
 
 """ 
-Idea: Find the minumum(or maximum) in each search and bring it forward.
+Idea: Find the minumum(or maximum) in each search and bring it forward. 
 
 Time Complexity: O(n^2)
 Space Complexity: O(1)
@@ -59,7 +59,7 @@ Add new elements in the already ordered sequence.
 Append first, then swap with the previous number if it's smaller.
 
 Time Complexity: O(n^2)
-Space Complexity: O(n) 
+Space Complexity: O(1) 
 """
 def insert_num(array,number):
     array.append(number)
@@ -130,3 +130,35 @@ def insertion_sort(array):
     for i in range(len(array)):
         insert_num(new_arr,array[i])
     return new_arr
+
+## Q7: Advanced Sorting 
+
+## Merge Sort
+def merge_sort():
+    """
+    Split until get the single unit, merge the ordered subset into the new ordered set. 
+
+    [38] [27] -> [27 38]
+    [27,38][3,43] -> [3,27,38,43]
+
+    new_list = [] 
+        i
+              j
+
+    Time Complexity: O(n) -- Just iterate the two lists 
+    Space Complexity: O(n) --when counting the output in it 
+    """
+
+def merge_sort_recursion():
+    """
+    check for the screenshot 
+    Space Complexity: the expense are not happened at the same time, the old one will be retrieved. 
+    and different from how time complexity is computed. 
+    """
+
+def quick_sort():
+    """
+    store_index is acting like a 隔板
+
+    Space Complexity: O(1) -- all the operation are inplaced a
+    """
