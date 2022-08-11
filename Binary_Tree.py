@@ -113,8 +113,6 @@ def postorder(root):
     postorder(root.left)
     print(root.val)
     
-
-
 # Q2: get height of a binary tree
 def get_height(root):
     """
@@ -127,15 +125,53 @@ def get_height(root):
     return 1 + max(left,right)
 
 # Q3: level order traversal of binary tree
-def ordertraverse():
+class Queue():
+    """
+    Level order traversal very similar to queue,
+    therefore define the following Queue class. 
+    """
+    def __init__(self):
+        self.items = []
+    
+    def enqueue(self, item):
+        self.items.insert(0,item)
+    def dequeue(self):
+        if not self.is_empty():
+            return self.items.pop()
+    def is_empty(self):
+        return len(self.items) == 0 
+    def peek(self):
+        if not self.is_empty():
+            # assume we're storing nodes in this queue 
+            return self.items[-1].value 
+    def __len__ (self):
+        return self.size()
+    def size(self):
+        return len(self.items)
+
+def ordertraverse(start):
     """
     10,5,15,2,7,12,20
     First in, first out: Queue
     """
+    if start is None:
+        return 
+    queue = Queue()
+    queue.enqueue(start)
+
+    traversal = ""
+    while len(queue)>0:
+        traversal += str(queue.peek()) + "-"
+        node = queue.dequeue()
+        
+        if node.left:
+            queue.enqueue(node.left)
+        if node.right:
+            queue.dequeue(node.left)
+
+    return traversal 
     
-
-
-
+    
 # print the binary tree in the level order 
 from collections import deque 
 
