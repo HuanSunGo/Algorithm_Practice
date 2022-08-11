@@ -410,3 +410,36 @@ class Solution:
         else: # l1.val > l2.val 
             l2.next = self.mergeTwoLists(l1, l2.next)
             return l2
+
+
+class ListNode:
+	def __init__(self, value, next=None):
+		self.val = value 
+		self.next = next 
+
+def merge(one, two):
+    """
+    input: ListNode one, ListNode two
+    return: ListNode
+    """
+    # write your solution here
+    three = ListNode(0)
+    head = three
+   
+    while one and two:
+      if one.val < two.val:
+        three.val = one.val
+        one = one.next
+      else:
+        three.val = two.val
+        two = two.next 
+      
+    if one:
+        three.next = one
+    else:
+        three.next = two
+
+    return head
+
+a, b = ListNode(1), ListNode(1, ListNode(2)) # 1, 1->2
+print_list(merge(a,b))

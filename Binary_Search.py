@@ -61,7 +61,7 @@ def binary_search_2d(matrix, target):
 
 # Q3: Find an element in the array that is clsest to the target number.
 """
-The original binary search (while l <= u ) method will fall into dead loop.
+The original binary search (while l <= u ) method will fall into dead loop when l=r= happens 
 
 i.e. nums=[1,2,5], target = 3
 """

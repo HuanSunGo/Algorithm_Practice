@@ -115,7 +115,7 @@ def postorder(root):
     
 
 
-# get height of a binary tree
+# Q2: get height of a binary tree
 def get_height(root):
     """
     If root is size n, then O(n)
@@ -126,7 +126,14 @@ def get_height(root):
     right = get_height(root.right)
     return 1 + max(left,right)
 
-# level order traversal of binary tree
+# Q3: level order traversal of binary tree
+def ordertraverse():
+    """
+    10,5,15,2,7,12,20
+    First in, first out: Queue
+    """
+    
+
 
 
 # print the binary tree in the level order 
