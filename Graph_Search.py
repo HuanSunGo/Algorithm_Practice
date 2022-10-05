@@ -6,6 +6,9 @@ Application:
 - web crawling: V -- page/website, E -- link
 - social networking V -- people, E -- connection 
 
+Realization: 
+The matrix format uses too much space, dictionary is an ideal way of strorage. 
+
 """
 
 # Traverse: breadth first search(BFS), pseudo code 

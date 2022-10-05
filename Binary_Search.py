@@ -244,3 +244,17 @@ def square_root(n):
 
 # test code 
 print(square_root(300))
+
+
+# bitonic array
+"""
+an array that increase first and decrese later
+eg. [1,2,3,6,5,3,2,0] , target = 2
+---------------------------------------------
+Logic: 
+1. two ordered array, should cut in half and do it seperately
+2. how to find the peak: use binary search to find, larger than the left and right 
+3. use the peak as the point to do the cut 
+4. continuous use binary search to do the rest 
+
+"""
