@@ -258,3 +258,26 @@ Logic:
 4. continuous use binary search to do the rest 
 
 """
+
+## LC 153. Find Minimum in Rotated Sorted Array
+def findMin(nums): 
+    l,r = 0, len(nums) -1 
+    res = nums[0] # set an arbitrary value to compare with 
+
+    while l <= r: 
+        # if already in the sorted order 
+        if nums[l] < nums[r]: 
+            res = min(res, nums[l])
+            break 
+
+        m = (l+r)//2 
+        res = min(res,nums[m]) # whole idea is assume the mid point is the smallest
+
+        if nums[m] >= nums[l]:
+            # if in the left portion, search right 
+            l = m + 1 
+
+        else: 
+            # if in the right portion, search left 
+            r = m -1 
+    return res 
