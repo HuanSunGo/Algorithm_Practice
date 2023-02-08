@@ -153,3 +153,70 @@ def find_match(large, small, start, n):
         if large[start + i] != small[i]:
             return False
     return True
+
+# Q5: Subarray products less than k. LeetCode 713 
+def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+        left = ans = 0
+        curr = 1 
+
+        if k <= 1: 
+            return 0 
+
+        for right in range(len(nums)):
+            curr *= nums[right]
+            # must be stricly less than, otherwise eliminate the left part
+            while curr >= k: 
+                curr //= nums[left]
+                left += 1 
+            """
+            For each index, the number of subarrays ending at that index 
+            is the length of the window after reaching that index. 
+            """
+            ans += right - left + 1
+        return ans 
+
+# Q5.1: Easier constrain, fixed window length, find the largest sum of k=4 window. e.g. [3,-1,4,12,-8,5,6]
+def find_best_subarray(nums, k):
+    """
+    TC: O(N)
+    SC: O(1)
+    """
+    curr = 0
+    # calculate the first window as the curr and edit the later upon this version
+    for i in range(k):
+        curr += nums[i] 
+    ans = curr 
+    for i in range(k,len(nums)):
+        curr += nums[i] - nums[i-k]
+        ans = max(ans, curr)
+    return ans 
+
+# Q6: Max Consecutive Ones. LeetCode 485
+def findMaxConsecutiveOnes(self, nums: List[int]) -> int:
+    curr = ans = 0 
+    for i in range(len(nums)): 
+        if nums[i] == 1:
+            curr += 1
+        else:
+            ans = max(curr,ans)
+            curr = 0 
+    return ans 
+
+# Q6.1: Max Consecutive Ones III 
+def longestOnes(self, nums: List[int], k: int) -> int:
+        left = right = 0
+        for right in range(len(nums)):
+            
+            if nums[right] == 0:
+                # if we encounter a 0 the we decrement K
+                k -= 1 
+            
+            if k < 0:
+                if nums[left] == 0: 
+                    # when the left one was zero, by contracting the window
+                    # the number of 0 that being used is decreased as well, therefore add it back
+                    k += 1                    
+                left += 1 
+                
+        return right - left + 1 
+

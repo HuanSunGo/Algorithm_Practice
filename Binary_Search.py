@@ -259,7 +259,7 @@ Logic:
 
 """
 
-## LC 153. Find Minimum in Rotated Sorted Array
+## LC 153. Find Minimum in Rotated Sorted Array e.g.[4,5,6,7,0,1,2]
 def findMin(nums): 
     l,r = 0, len(nums) -1 
     res = nums[0] # set an arbitrary value to compare with 
@@ -281,3 +281,4 @@ def findMin(nums):
             # if in the right portion, search left 
             r = m -1 
     return res 
+
