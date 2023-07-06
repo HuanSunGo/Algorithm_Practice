@@ -3,12 +3,9 @@
 Dictionary
 
 For any data structure, focus on Create, Add, Delete, Update, Look-up.
-Time Complexity: O(1) why?
+Time Complexity: O(1) 
 Space Complexity: O(n)
 """
-
-from operator import le
-
 
 grades= {'Ana':'B', 'John':'A','Denise':'A','Katy':'A'}
 grades['Sylvan'] # raise KeyError
@@ -68,6 +65,7 @@ Set
 Def: Unordered collection of unique elements. Special case of dict with only keys. 
 Traits: Do not record element position or order of insertion, 
         do not support indexing, slicing, or other sequence-like behavior.
+        Better for just check the existence. 
 
 """
 
@@ -91,7 +89,7 @@ print(a.intersection(b))
 def is_palindromic(word):
     """
     Given a string, check if it's can be written palindromically.
-    e.g. 'edified' can be permuted to form 'deified'.
+    e.g. 'deified' can be permuted to form 'deified'.
 
     Hash: letter -> count 
 
@@ -114,6 +112,66 @@ def is_palindromic(word):
                 return False
     return True 
 
+# Q3. Sliding window with hashtable
+from collections import defaultdict 
+def find_longest_substr(s,k):
+    """
+    You are given a string s and an integer k. Find the length of the longest substring that contains at most k distinct characters.
+
+    For example, given s = "eceba" and k = 2, return 3. The longest substring with at most 2 distinct characters is "ece".
+    """
+    left = ans = 0
+    counts = defaultdict(int)
+    for right in range (len(s)):
+        counts[s[right]] += 1 
+        while len(counts) > k:
+            # here we don't want to get the over the number of k
+            counts[s[left]] -= 1 
+            if counts[s[left]] == 0:
+                del counts[s[left]]
+            left += 1 
+        ans = max(ans, right-left+1)
+
+    return ans 
+
+# LC 2238. Interesction of Multiple Arrays 
+from collections import defaultdict 
+class Solution: 
+    def intersection(self, nums:List[List[int]]) -> List[int]:
+        """
+        For example, given nums = [[3,1,2,4,5],[1,2,3,4],[3,4,5,6]], return [3, 4]. 3 and 4 are the only numbers that are in all arrays.
+
+        The occurence of the number should be the numberr of the lists that's within the outer list, use hashmap to count and iterate.
+        """
+        len_nums = len(nums)
+        counts = defaultdict(int)
+        ans = []
+        for i in len_nums:
+            for j in len(nums[i]):
+                counts[j] += 1 
+        
+        for key in counts.keys:
+            if counts[key] == len_nums:
+                ans.append(counts.values)
+        
+        return ans 
+
+# LC 560. Subarray Sum Equals K 
+def subarraySum(nums,k):
+    """
+    Map the prefix to the frequencies.
+    """
+    counts = defaultdict(int)
+    # empty subarry [] is a subarray with sum 0
+    count[0] = 1
+    ans = curr = 0
+    
+    for num in nums:
+        # add eacg bynver to the prefix sum
+        curr += num
+        # check if the current prefix sum minus k has appeared already
+        ans += counts[curr - k]
+        counts[curr] += 1 
 
 
-
+    pass 

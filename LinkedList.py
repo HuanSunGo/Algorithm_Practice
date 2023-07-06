@@ -10,9 +10,6 @@ Why need a linked list?
 ## Q1: Traverse
 
 # Node class
-from os import preadv
-from typing import List
-
 
 class ListNode(object):
     def __init__(self, val):
@@ -236,9 +233,9 @@ class my_linkedlist:
 			self.head = ListNode(val)
 			self.tail = self.head 
 		else : 
-			new_head = ListNode(val)
-			new_head.next = self.head
-			self.head = new_head 
+			new_tail = ListNode(val)
+			self.tail.next = new_tail
+			new_tail.next = None
 		self.size += 1 
 
 	def add_at_index(self, index, val):
@@ -259,21 +256,22 @@ class my_linkedlist:
 			prev.next = new_node
 			self.size += 1 
 			
-	def deleteAtIndex(self, index):
-        """
+	def delete_at_index(self, index, val):
+		"""
         Delete the index-th node in the linked list, if the index is valid.
-        :type index: int
-        :rtype: None
+			:type index: int
+			:rtype: None
         """
-        fake = ListNode(val)
-        fake.next = self.head 
-        prev = get_node(fake, index)
-        if prev is None or prev.next is None:
-          return fake.next 
-        rm_node = prev.next
-        prev.next = rm_node.next 
-        rm_node.next = None 
-        return fake.next 
+		fake = ListNode(val)
+		fake.next = self.head 
+		prev = self.get_node(fake,index)
+		if prev is None or prev.next is None:
+			return fake.next 
+		rm_node = prev.next
+		prev.next = rm_node.next 
+		rm_node.next = None 
+		
+		return fake.next 
 
 my_list=my_linkedlist()
 my_list.add_at_head(1)
@@ -315,7 +313,7 @@ def remove_vowels(head):
 			prev.next = curr.next 
 		else:
 			prev = prev.next 
-	    curr = curr.next 
+		curr = curr.next 
 	return fake_head.next 
 
 def print_list(node):
@@ -396,7 +394,7 @@ print(is_palindrome(node1))
 #         self.next = next
 
 class Solution:
-    def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(self, l1: ListNode, l2: ListNode):
         # base case 
         if l1 is None:
             return l2

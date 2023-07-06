@@ -220,3 +220,13 @@ def longestOnes(self, nums: List[int], k: int) -> int:
                 
         return right - left + 1 
 
+# Q7. lc49 Group Anagrams
+def groupAnagrams(self, strs: str):
+    from collections import defaultdict
+    group_dic = defaultdict(list)
+    # [{"aet":["eat","tea","ate"];}]
+    for word in strs:
+        key = ''.join(sorted(word))
+        group_dic[key].append(word)
+    
+    return list(group_dic.values())
